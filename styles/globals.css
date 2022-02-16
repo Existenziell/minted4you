@@ -1,0 +1,48 @@
+/* --------------------------------------------------------
+Style Sheet for NFT exchange
+
+version: 0.9
+last modified: 13.09.2021 by Christof Bauer
+author: Christof Bauer
+email: bauer.christof@gmail.com
+----------------------------------------------------------*/
+
+@import url("https://fonts.googleapis.com/css?family=Nunito&display=swap");
+
+:root {
+  --color-brand: #efefef;
+  --color-brand-dark: #1a1a1a;
+  --color-highlight: #FEDE00;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.active {
+  @apply font-extrabold text-highlight;
+}
+
+.mobile-menu .active {
+  @apply text-highlight;
+}
+
+.link {
+  @apply underline outline-none transition-all duration-300;
+}
+
+.link:hover {
+  @apply no-underline rounded transition-all duration-500 text-black bg-highlight; 
+}
+
+.button {
+  @apply text-highlight py-4 px-8 rounded  transition-all cursor-pointer
+    border border-highlight bg-brand-dark bg-opacity-80
+    hover:bg-opacity-100
+    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-highlight;
+}
+
+
+.connect-button {
+  @apply px-4 py-2 border border-highlight hover:bg-highlight hover:text-brand-dark transition-all;
+}
