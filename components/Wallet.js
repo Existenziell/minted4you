@@ -5,6 +5,7 @@ import { ethers } from 'ethers'
 import { hasEthereum } from '../lib/ethereum'
 import { ConnectWallet } from './ConnectWallet'
 import { chains } from '../lib/chains'
+import Link from 'next/link'
 import AppContext from '../context/AppContext'
 
 const Wallet = () => {
@@ -73,11 +74,13 @@ const Wallet = () => {
   }, [router, context.setIsCorrectChain])
 
   return (
-    <div className='absolute top-4 right-6 text-right text-xs text-highlight'>
+    <div className='absolute top-7 right-6 text-right text-xs text-highlight'>
       {isWalletConnected ?
-        <div>
-          {connectedWalletAddress.substring(0, 5)}&#8230;{connectedWalletAddress.slice(connectedWalletAddress.length - 4)}
-        </div>
+        <Link href='/settings'>
+          <a>
+            {connectedWalletAddress.substring(0, 5)}&#8230;{connectedWalletAddress.slice(connectedWalletAddress.length - 4)}
+          </a>
+        </Link>
         :
         <ConnectWallet />
       }

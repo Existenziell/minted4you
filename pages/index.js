@@ -89,8 +89,8 @@ const Exchange = () => {
 
   return (
     <div className="px-4 pb-16 mt-16">
-      <h1 className="text-2xl md:text-4xl mb-16">Minted<span className='text-highlight'>4</span>you</h1>
-
+      <h1 className="text-4xl mb-16">Minted<span className='text-highlight'>4</span>you</h1>
+      <p className='mb-2 text-left ml-2'>Upcoming events:</p>
       {events.map((e, index) => {
         return (
           <Link href={`/events/${e.slug}`} key={index}>
@@ -98,18 +98,14 @@ const Exchange = () => {
 
               <div className='relative flex justify-left items-center gap-8 bg-header1 bg-no-repeat bg-cover h-64 mx-2 mb-2'>
                 {/* <Image src={`/events/header${index + 1}.png`} alt='Event1' width={1320} height={280} /> */}
-                <div className='text-2xl text-brand-dark font-extrabold rounded backdrop-blur-sm bg-white bg-opacity-30 md:flex items-center px-2 py-4 ml-4'>
-                  <p className='w-16 inline-block'>
-                    {e.date[0]}
-                  </p>
+                <div className='text-lg md:text-2xl text-brand-dark font-extrabold rounded backdrop-blur-sm bg-white bg-opacity-30 md:flex items-center px-2 py-4 ml-4'>
+                  <p className='w-16 inline-block'>{e.date[0]}</p>
                   <span className='pt-0 block md:inline-block'>-</span>
-                  <p className='w-16 block md:inline-block'>
-                    {e.date[1]}
-                  </p>
+                  <p className='w-16 block md:inline-block'>{e.date[1]}</p>
                 </div>
 
                 <div className='text-left'>
-                  <h2 className='text-4xl mb-4'>{e.name}</h2>
+                  <h2 className='text-2xl md:text-4xl mb-4'>{e.name}</h2>
                   <div>
                     <span className='text-sm text-gray-300'>LOCATION</span>
                     <span className='text-lg block'>{e.location}</span>

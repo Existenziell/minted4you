@@ -13,7 +13,7 @@ const Event = ({ event }) => {
           <div key={index}>
             <div className='relative flex justify-left items-center gap-8 bg-header1 bg-no-repeat bg-cover h-64 mx-2 mb-2'>
               {/* <Image src={`/events/header${index + 1}.png`} alt='Event1' width={1320} height={280} /> */}
-              <div className='text-2xl text-brand-dark font-extrabold rounded backdrop-blur-sm bg-white bg-opacity-30 md:flex items-center px-2 py-4 ml-4'>
+              <div className='text-lg md:text-2xl text-brand-dark font-extrabold rounded backdrop-blur-sm bg-white bg-opacity-30 md:flex items-center px-2 py-4 ml-4'>
                 <p className='w-16 inline-block'>
                   {e.date[0]}
                 </p>
@@ -24,7 +24,7 @@ const Event = ({ event }) => {
               </div>
 
               <div className='text-left'>
-                <h2 className='text-4xl mb-4'>{e.name}</h2>
+                <h2 className='text-2xl md:text-4xl mb-4'>{e.name}</h2>
                 <div>
                   <span className='text-sm text-gray-300'>LOCATION</span>
                   <span className='text-lg block'>{e.location}</span>
@@ -36,7 +36,7 @@ const Event = ({ event }) => {
               {e.desc}
             </div>
 
-            <h2 className='mt-12 text-lg'>Available Tickets:</h2>
+            <h2 className='mt-12 text-lg text-left ml-2'>Available Tickets:</h2>
             <div className='flex flex-wrap'>
               {e.tickets.map((t, i) => {
                 return (
