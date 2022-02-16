@@ -3,16 +3,11 @@ import Link from 'next/link'
 import { events } from '../../../lib/events'
 
 const Event = ({ ticket }) => {
-  console.log("dscsdchsdchc", ticket);
-
   const event = events[0]
 
   return (
     <div className="px-4 pb-16 mt-16">
       <h1 className="text-2xl md:text-4xl mb-16">Minted<span className='text-highlight'>4</span>you</h1>
-
-
-
 
       <div className='flex flex-col md:flex-row md:items-start md:gap-8'>
         <Image src={`/events/${ticket.image}.png`} alt={`Ticket-${ticket.image}`} width={576} height={1024} />
@@ -44,7 +39,6 @@ const Event = ({ ticket }) => {
       </div>
 
       <div className='my-8 border border-highlight rounded-sm p-4'>{event.desc}</div>
-
     </div>
   )
 }
@@ -53,7 +47,6 @@ export async function getStaticProps(ctx) {
   const slug = ctx.params.slug
 
   let ticket = events[0].tickets.filter((t) => (t.slug === slug))[0]
-  console.log(ticket);
   ticket = JSON.parse(JSON.stringify(ticket))
 
   return {
@@ -62,7 +55,6 @@ export async function getStaticProps(ctx) {
 }
 
 export async function getStaticPaths() {
-  console.log(events[0].tickets);
   const paths = events[0].tickets.map(ticket => {
     return ({
       params: { slug: ticket.slug },
