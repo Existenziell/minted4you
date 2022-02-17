@@ -5,7 +5,7 @@ module.exports = {
     fontFamily: {
       'sans': ['Nunito'],
       'serif': ['Nunito'],
-      // 'mono': ['Nunito'],
+      'mono': ['Nunito'],
       'display': ['Nunito'],
       'body': ['Nunito']
     },
