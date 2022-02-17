@@ -18,6 +18,7 @@ module.exports = {
       backgroundImage: {
         ribbon: 'url(/icons/ribbon.svg)',
         header1: 'url(/events/header1.png)',
+        header2: 'url(/events/header2.png)',
       },
     },
   },

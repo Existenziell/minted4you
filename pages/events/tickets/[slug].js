@@ -1,10 +1,7 @@
 import Image from 'next/image'
-import Link from 'next/link'
 import { events } from '../../../lib/events'
 
-const Event = ({ ticket }) => {
-  const event = events[0]
-
+const Event = ({ ticket, event }) => {
   return (
     <div className="px-4 pb-16 mt-16">
       <h1 className="text-2xl md:text-4xl mb-16">Minted<span className='text-highlight'>4</span>you</h1>
@@ -15,9 +12,10 @@ const Event = ({ ticket }) => {
         <div className='bg-brand-dark bg-opacity-60 backdrop-blur-sm text-left w-full md:w-1/2'>
           <div className='flex flex-col justify-evenly h-full my-8 md:my-0'>
 
-            <h2 className='mb-4 text-4xl'>{event.name}: {event.country}</h2>
+            <h2 className='text-4xl'>{event.name}</h2>
+            <p className='mb-4'>{event.country}</p>
             <h3 className='text-2xl'>{ticket.name}</h3>
-            <div className='rounded-sm border border-highlight flex items-center px-3 py-1 w-max my-4'>
+            <div className='rounded-sm border border-highlight flex items-center gap-2 px-3 py-1 w-max my-4'>
               <img src='/icons/ticket.svg' />
               <span>Ticket</span>
             </div>
@@ -45,19 +43,28 @@ const Event = ({ ticket }) => {
 
 export async function getStaticProps(ctx) {
   const slug = ctx.params.slug
+  const temporary = slug.split('-')[0]
+  let event
+  temporary === 'blockdown' ?
+    event = events[0] :
+    event = events[1]
 
-  let ticket = events[0].tickets.filter((t) => (t.slug === slug))[0]
+  const tickets = events.map(e => {
+    return (e.tickets)
+  })
+  let ticket = tickets.flat().filter((t) => (t.slug === slug))[0]
   ticket = JSON.parse(JSON.stringify(ticket))
 
   return {
-    props: { ticket }
+    props: { ticket, event }
   }
 }
 
 export async function getStaticPaths() {
-  const paths = events[0].tickets.map(ticket => {
+  const tickets = events.map(e => (e.tickets)).flat()
+  const paths = tickets.map(t => {
     return ({
-      params: { slug: ticket.slug },
+      params: { slug: t.slug },
     })
   })
   return { paths, fallback: false }
