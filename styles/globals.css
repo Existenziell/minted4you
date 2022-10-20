@@ -42,7 +42,6 @@ email: bauer.christof@gmail.com
     focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-highlight;
 }
 
-
 .connect-button {
   @apply px-4 py-2 border border-highlight hover:bg-highlight hover:text-brand-dark transition-all;
 }

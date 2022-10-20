@@ -76,7 +76,7 @@ const Wallet = () => {
   return (
     <div className='absolute top-7 right-6 text-right text-xs text-highlight'>
       {isWalletConnected ?
-        <Link href='/settings'>
+        <Link href='/wallet'>
           <a>
             {connectedWalletAddress.substring(0, 5)}&#8230;{connectedWalletAddress.slice(connectedWalletAddress.length - 4)}
           </a>

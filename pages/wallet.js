@@ -1,78 +1,65 @@
 import { ethers } from 'ethers'
-import { useEffect, useState, useContext } from 'react'
-import axios from 'axios'
-import AppContext from '../context/AppContext'
-import Link from 'next/link'
-
-// Will be populated once the smart contracts are deployed.
-import {
-  nftaddress, nftmarketaddress
-} from '../config'
-
-import Market from '../artifacts/contracts/Market.sol/NFTMarket.json'
-import NFT from '../artifacts/contracts/NFT.sol/NFT.json'
+import { useEffect, useState } from 'react'
+import connect from '../lib/connect'
 
 export default function MyAssets() {
 
   const [nfts, setNfts] = useState([])
-  const [loadingState, setLoadingState] = useState('not-loaded')
+  const [balance, setBalance] = useState(0)
+  let accountAddress
 
-  const context = useContext(AppContext)
-  let isCorrectChain = context.state.isCorrectChain
-  let provider = context.state.provider
-
-  useEffect(() => {
-    if (isCorrectChain && provider) loadNFTs()
-  }, [isCorrectChain, loadingState])
-
-  async function loadNFTs() {
-    const signer = provider.getSigner()
-    const marketContract = new ethers.Contract(nftmarketaddress, Market.abi, signer)
-    const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider)
-    const data = await marketContract.fetchMyNFTs()
-
-    const items = await Promise.all(data.map(async i => {
-      const tokenUri = await tokenContract.tokenURI(i.tokenId)
-      const meta = await axios.get(tokenUri)
-      let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
-      let item = {
-        price,
-        name: meta.data.name,
-        tokenId: i.tokenId.toNumber(),
-        seller: i.seller,
-        owner: i.owner,
-        image: meta.data.image,
-      }
-      return item
-    }))
-
-    setNfts(items)
-    setLoadingState('loaded')
+  const fetchNfts = async () => {
+    const options = { method: 'GET', headers: { Accept: 'application/json' } };
+    await fetch('https://api.opensea.io/api/v1/assets?owner=0x28604844072F6A5F554B0fDA4766dC2E9302A6eE&order_direction=desc&limit=50&include_orders=true', options)
+      .then(response => response.json())
+      .then(response => {
+        setNfts(response.assets)
+        console.log(nfts)
+      })
+      .catch(err => console.error(err));
   }
 
-  if (!context.state.isCorrectChain)
-    return (
-      <div className="mt-16">
-        <p className='text-lg'>We operate on the Polygon Mumbai Testnet (80001).<br />Please change your network to proceed.</p>
-        <p className='mt-2 text-sm'><a href='https://blog.pods.finance/guide-connecting-mumbai-testnet-to-your-metamask-87978071aca8' target='_blank' className='link'>This</a> article can help with that.</p>
-      </div>
-    )
+  const connectWallet = async () => {
+    accountAddress = await connect()
+    console.log(accountAddress);
+    getWalletDetails(accountAddress)
+  }
 
-  if (loadingState === 'loaded' && !nfts.length)
-    return (
-      <div className="mt-16">
-        <h1 className="text-2xl">No assets owned yet.</h1>
-        <Link href='/'><a className='link'>Explore events</a></Link>
-      </div>
-    )
+  const getWalletDetails = async (address) => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    const balance = await provider.getBalance(address)
+    // convert a currency unit from wei to ether
+    const balanceInEth = ethers.utils.formatEther(balance)
+    console.log(`balance: ${balanceInEth} ETH`)
+    setBalance(balanceInEth)
+  }
+
+
+  useEffect(() => {
+
+    connectWallet()
+    // fetchNfts()
+
+    window.ethereum.on("accountsChanged", async () => {
+      connectWallet()
+    })
+  }, [])
+
+  // if (!nfts)
+  //   return (
+  //     <p className="mt-16">
+  //       Loading
+  //     </p>
+  //   )
 
   return (
 
-    <div className="flex justify-center mt-16">
-      <h1 className="text-2xl md:text-4xl">My Wallet</h1>
+    <div className="flex flex-col justify-center items-center mt-16">
+      <h1 className="text-2xl md:text-4xl mb-8">My Wallet</h1>
+      <p className='flex gap-4'>Wallet balance: {balance}</p>
       <div className="p-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
-          {
+        <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 pt-4">
+          {/* {
             nfts.map((nft, i) => (
               <div key={i} className="border border-brand text-brand-dark shadow rounded overflow-hidden">
                 <img src={nft.image} className="rounded" />
@@ -82,7 +69,7 @@ export default function MyAssets() {
                 </div>
               </div>
             ))
-          }
+          } */}
         </div>
       </div>
     </div>

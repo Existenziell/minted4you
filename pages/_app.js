@@ -37,7 +37,7 @@ function Exchange({ Component, pageProps }) {
         <meta name="theme-color" content="#a6d1c9" />
         <link rel='preconnect' href='https://fonts.googleapis.com' />
         <link rel='preconnect' href='https://fonts.gstatic.com' crossOrigin="true" />
-        <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap' />
+        {/* <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap' /> */}
       </Head>
       <Layout>
         <Component {...pageProps} />

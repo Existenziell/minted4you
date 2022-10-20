@@ -16,7 +16,7 @@ export default function CreatorDashboard() {
   const [nfts, setNfts] = useState([])
   const [sold, setSold] = useState([])
   const [loadingState, setLoadingState] = useState('not-loaded')
-  const ipfsUrl = 'https://ipfs.infura.io/ipfs/'
+  const ipfsUrl = 'https://infura-ipfs.io/ipfs/'
 
   const context = useContext(AppContext)
   let isCorrectChain = context.state.isCorrectChain
